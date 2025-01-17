@@ -1,0 +1,10 @@
+This work fo each row 
+  // Calculate and update COL1 = COL2 + COL3
+        col1.val(Number(parseFloat(col2.val() || 0) + parseFloat(col3.val() || 0)).toFixed(0));
+
+but this only  for  first row 
+
+ col1.val(sum !== 0 ? sum.toFixed(0) : "").prop("readonly", true);
+
+
+
