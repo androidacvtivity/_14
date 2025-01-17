@@ -1,10 +1,6 @@
-This work fo each row 
-  // Calculate and update COL1 = COL2 + COL3
-        col1.val(Number(parseFloat(col2.val() || 0) + parseFloat(col3.val() || 0)).toFixed(0));
-
-but this only  for  first row 
-
- col1.val(sum !== 0 ? sum.toFixed(0) : "").prop("readonly", true);
+Ok. Thsi functions f_Capitol_340_04 - calculate autosum for - COL1 = COL2+COL3 pentru toate rindurile, exceptie rind 101
+now in this file js  add another function who will calculate autosume for 
+COL11 = COL12 + COL13 pentru toate rindurile, exceptie rind 101 
 
 
 
