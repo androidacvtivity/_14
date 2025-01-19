@@ -211,8 +211,8 @@ function f_Capitol_340_Sum(targetCol, col1, col2) {
         }
     });
 }
-
-
+// Add logic to show error even if the code is duplicated
+// Adauga logica sa arate eroare si daca codul se dubleaza 
 function validateColumnOne() {
     var rowIDs = [
        
@@ -319,29 +319,80 @@ function validateColumnOne() {
         // Add other rows dynamically as needed
     ];
 
-    //Modify this function - to show alert when the code is not part of the classifier.
     rowIDs.forEach(function (row) {
-        var escapedRind = row.rind.replace(/\./g, "\\.");
-        var col1 = $("#14_340_" + row.id + "_" + escapedRind + "_1");
+        var escapedRind = row.rind.replace(/\./g, "\\."); // Escape dots in rind
+        var col1 = $("#14_340_" + row.id + "_" + escapedRind + "_1"); // Get the COL1 element
 
         if (col1.length) {
-            var value = col1.val().trim();
+            var value = col1.val().trim(); // Get the value in the input field
             var found = codeList.find(function (code) {
-                return code.code === value;
+                return code.code === value; // Check if the code exists in the classifier
             });
 
-            if (!found && value) {
-                alert("Codul nu face parte din clasificator: " + value);
-            } else if (found) {
-                alert(
-                    "Codul face parte din clasificator: " +
-                    found.code +
-                    ", Name: " +
-                    found.name
-                );
+           
+
+         
+            // Create a toast container dynamically if it doesn't exist
+            if (!document.getElementById("toastContainer")) {
+                const toastContainer = document.createElement("div");
+                toastContainer.id = "toastContainer";
+                toastContainer.style.position = "fixed";
+                toastContainer.style.bottom = "20px";
+                toastContainer.style.right = "20px";
+                toastContainer.style.zIndex = "1000";
+                toastContainer.style.maxWidth = "300px";
+                document.body.appendChild(toastContainer);
             }
+
+            // Show a toast message
+            if (!found && value) {
+                const toast = document.createElement("div");
+                toast.style.backgroundColor = "red";
+                toast.style.color = "white";
+                toast.style.padding = "10px";
+                toast.style.marginBottom = "10px";
+                toast.style.borderRadius = "5px";
+                toast.style.boxShadow = "0 2px 5px rgba(0, 0, 0, 0.3)";
+                toast.textContent = "Codul nu face parte din clasificator: " + value;
+
+                // Add the toast to the container
+                const toastContainer = document.getElementById("toastContainer");
+                toastContainer.appendChild(toast);
+
+                // Automatically remove the toast after 3 seconds
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            }
+
+
+            if (!found && value) {
+                // Remove any existing error message first
+                const existingError = col1.next(".error-message");
+                if (existingError.length) {
+                    existingError.remove();
+                }
+
+                // Add a new error message next to the input field
+                const errorMessage = document.createElement("span");
+                errorMessage.className = "error-message";
+                errorMessage.style.color = "red";
+                errorMessage.style.marginLeft = "10px";
+                errorMessage.textContent = "Codul nu face parte din clasificator";
+                col1[0].parentNode.appendChild(errorMessage);
+            } else {
+                // If the code is correct, remove the error message
+                const existingError = col1.next(".error-message");
+                if (existingError.length) {
+                    existingError.remove();
+                }
+            }
+
+
+
         }
     });
+
 
 
 }

@@ -319,29 +319,23 @@ function validateColumnOne() {
         // Add other rows dynamically as needed
     ];
 
-    //Modify this function - to show alert when the code is not part of the classifier.
     rowIDs.forEach(function (row) {
-        var escapedRind = row.rind.replace(/\./g, "\\.");
-        var col1 = $("#14_340_" + row.id + "_" + escapedRind + "_1");
+        var escapedRind = row.rind.replace(/\./g, "\\."); // Escape dots in rind
+        var col1 = $("#14_340_" + row.id + "_" + escapedRind + "_1"); // Get the COL1 element
 
         if (col1.length) {
-            var value = col1.val().trim();
+            var value = col1.val().trim(); // Get the value in the input field
             var found = codeList.find(function (code) {
-                return code.code === value;
+                return code.code === value; // Check if the code exists in the classifier
             });
 
+            // Show alert only if the code is not part of the classifier
             if (!found && value) {
                 alert("Codul nu face parte din clasificator: " + value);
-            } else if (found) {
-                alert(
-                    "Codul face parte din clasificator: " +
-                    found.code +
-                    ", Name: " +
-                    found.name
-                );
             }
         }
     });
+
 
 
 }
